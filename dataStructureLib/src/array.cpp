@@ -71,6 +71,14 @@ T Array<T>::operator [](int pos) const
     return this->get(pos);
 }
 
+template <typename T>
+T* Array<T>::address() const
+{
+    return i_mem;
 }
+
+}
+
+
 
 #endif // ARRARY_CPP

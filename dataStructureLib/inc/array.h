@@ -15,6 +15,7 @@ public:
     T& get(int pos);
     T get(int pos) const;
     virtual int size() const = 0;
+    T* address() const;
 
     T& operator[](int pos);
     T operator [](int pos) const;
