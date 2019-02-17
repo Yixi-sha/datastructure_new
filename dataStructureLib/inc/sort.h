@@ -28,6 +28,22 @@ public:
     static void insert(T* obj, int len, bool minToMax = true); // it is steady
     template <typename T>
     static void insert(Array<T>& obj, bool minToMax = true);
+
+    template <typename T>
+    static void bubble(T* obj, int len, bool minToMax = true);
+    template <typename T>
+    static void bubble(Array<T>& obj, bool minToMax = true);
+
+    template <typename T>
+    static void shell_select(T* obj, int len, bool minToMax = true);
+    template <typename T>
+    static void shell_select(Array<T>& obj, bool minToMax = true);
+
+    template <typename T>
+    static void shell_bubble(T* obj, int len, bool minToMax = true);
+    template <typename T>
+    static void shell_bubble(Array<T>& obj, bool minToMax = true);
+
 };
 
 }
