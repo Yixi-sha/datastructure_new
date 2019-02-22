@@ -6,7 +6,7 @@
 namespace yixi {
 
 template <typename T>
-void Sort::swap(T& a, T& b)
+void Sort<T>::swap(T& a, T& b)
 {
     T c = a;
     a = b;
@@ -14,7 +14,7 @@ void Sort::swap(T& a, T& b)
 }
 
 template <typename T>
-void Sort::select(T* obj, int len, bool minToMax)
+void Sort<T>::select(T* obj, int len, bool minToMax)
 {
     for(int i = 0; i < len; i++)
     {
@@ -36,13 +36,13 @@ void Sort::select(T* obj, int len, bool minToMax)
 }
 
 template <typename T>
-void Sort::select(Array<T>& obj, bool minToMax)
+void Sort<T>::select(Array<T>& obj, bool minToMax)
 {
     select(obj.address(), obj.size(), minToMax);
 }
 
 template <typename T>
-void Sort::insert(T* obj, int len, bool minToMax)
+void Sort<T>::insert(T* obj, int len, bool minToMax)
 {
     for(int i= 1; i < len; i++)
     {
@@ -67,13 +67,13 @@ void Sort::insert(T* obj, int len, bool minToMax)
 }
 
 template <typename T>
-void Sort::insert(Array<T>& obj, bool minToMax)
+void Sort<T>::insert(Array<T>& obj, bool minToMax)
 {
     insert(obj.address(), obj.size(), minToMax);
 }
 
 template <typename T>
-void Sort::bubble(T* obj, int len, bool minToMax)
+void Sort<T>::bubble(T* obj, int len, bool minToMax)
 {
     bool exchange = true;
 
@@ -92,14 +92,14 @@ void Sort::bubble(T* obj, int len, bool minToMax)
 }
 
 template <typename T>
-void Sort::bubble(Array<T>& obj, bool minToMax)
+void Sort<T>::bubble(Array<T>& obj, bool minToMax)
 {
     bubble(obj.address(), obj.size(), minToMax);
 }
 
 
 template <typename T>
-void Sort::shell_select(T* obj, int len, bool minToMax )
+void Sort<T>::shell_select(T* obj, int len, bool minToMax )
 {
     int d = len;
 
@@ -129,13 +129,13 @@ void Sort::shell_select(T* obj, int len, bool minToMax )
 }
 
 template <typename T>
-void Sort::shell_select(Array<T>& obj, bool minToMax)
+void Sort<T>::shell_select(Array<T>& obj, bool minToMax)
 {
     shell_select(obj.address(), obj.size(), minToMax);
 }
 
 template <typename T>
-void Sort::shell_bubble(T* obj, int len, bool minToMax)
+void Sort<T>::shell_bubble(T* obj, int len, bool minToMax)
 {
     int d = len;
     bool exchange = true;
@@ -160,9 +160,160 @@ void Sort::shell_bubble(T* obj, int len, bool minToMax)
 }
 
 template <typename T>
-void Sort::shell_bubble(Array<T>& obj, bool minToMax)
+void Sort<T>::shell_bubble(Array<T>& obj, bool minToMax)
 {
     shell_bubble(obj.address(), obj.size(), minToMax);
+}
+
+template <typename T>
+void Sort<T>::merge_quick_two(int start, int end, T* obj, bool minToMax)
+{
+    if(minToMax)
+    {
+        if(obj[start] > obj[end])
+        {
+            swap(obj[start], obj[end]);
+        }
+    }
+    else
+    {
+        if(obj[start] < obj[end])
+        {
+            swap(obj[start], obj[end]);
+        }
+    }
+}
+
+template <typename T>
+void Sort<T>::merge(T* obj, int len, bool minToMax)
+{
+    T*  help = reinterpret_cast<T*>(new char[sizeof(T) * len]);
+    if(help != nullptr)
+    {
+        merge(0, len - 1, obj, help, minToMax);
+        delete[] help;
+    }
+    else
+    {
+        THROW_EXCEPTION(NoEnoughMemoryException, "No Enough Memory for Sort::merge(T* obj, int len, bool minToMax)");
+    }
+}
+
+template <typename T>
+void Sort<T>::merge(int start, int end, T* obj,T* help, bool minToMax)
+{
+    if(start == end)
+    {
+
+    }
+    else if(start == (end - 1))
+    {
+        merge_quick_two(start, end, obj, minToMax);
+    }
+    else
+    {
+        int mid = ((end + start) / 2);
+        merge(start, mid, obj, help, minToMax);
+        merge(mid + 1, end, obj, help, minToMax);
+
+        int i_start = start, i_mid = mid + 1, pos = start;
+
+        while((i_start <= mid) && (i_mid <= end))
+        {
+            if(minToMax ? obj[i_start] < obj[i_mid] : obj[i_start] > obj[i_mid])
+            {
+                help[pos] = obj[i_start];
+                pos++;
+                i_start++;
+            }
+            else
+            {
+                help[pos] = obj[i_mid];
+                pos++;
+                i_mid++;
+            }
+        }
+        while (i_start <= mid)
+        {
+            help[pos] = obj[i_start];
+            pos++;
+            i_start++;
+        }
+        while (i_mid <= end)
+        {
+            help[pos] = obj[i_mid];
+            pos++;
+            i_mid++;
+        }
+        pos = start;
+        while(pos <= end)
+        {
+            obj[pos] = help[pos];
+            pos++;
+        }
+    }
+}
+
+template <typename T>
+void Sort<T>::merge(Array<T>& obj, bool minToMax)
+{
+    merge(obj.address(), obj.size(), minToMax);
+}
+
+
+template <typename T>
+void Sort<T>::quick(T* obj, int len, bool minToMax)
+{
+    quick(0, len - 1, obj, minToMax);
+}
+
+template <typename T>
+void Sort<T>::quick(int start, int end, T obj[], bool minToMax)
+{
+    if(end == start)
+    {
+
+    }
+    else if(start == (end - 1))
+    {
+        merge_quick_two(start, end, obj, minToMax);
+    }
+    else
+    {
+        int i_start = start, i_end = end;
+        while(i_start < i_end)
+        {
+            while((i_start < i_end) && (minToMax ? obj[i_start] < obj[i_end] : obj[i_start] > obj[i_end]))
+            {
+                i_end--;
+            }
+            if(i_end != i_start)
+            {
+               swap(obj[i_start], obj[i_end]);
+            }
+            while((i_start < i_end) && (minToMax ? obj[i_start] <= obj[i_end] : obj[i_start] >= obj[i_end]))
+            {
+                i_start++;
+            }
+            if(i_end != i_start)
+            {
+                swap(obj[i_start], obj[i_end]);
+            }
+
+        }
+        if(start <= (i_start -1))
+            quick(start, i_start - 1, obj, minToMax);
+        if((i_start + 1) <= end)
+            quick(i_start + 1, end , obj, minToMax);
+    }
+
+
+}
+
+template <typename T>
+void Sort<T>::quick(Array<T>& obj, bool minToMax)
+{
+    quick(obj.address(), obj.size(), minToMax);
 }
 
 }
