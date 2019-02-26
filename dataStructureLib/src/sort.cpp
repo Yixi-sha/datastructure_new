@@ -316,6 +316,63 @@ void Sort<T>::quick(Array<T>& obj, bool minToMax)
     quick(obj.address(), obj.size(), minToMax);
 }
 
+template <typename T>
+void Sort<T>::createHeap(T* obj, int first, int end, bool minToMax)
+{
+    int count = end - first + 1;
+    obj = obj + first;
+    end = count - 1;
+
+    if((count != 0) && ((count % 2) == 0))
+    {
+
+        int parent = (end - 1) / 2;
+        if(minToMax ? obj[end] < obj[parent] : obj[end] > obj[parent])
+        {
+            swap(obj[end], obj[parent]);
+        }
+        end--;
+    }
+    while (end > 0)
+    {
+        int parent = (end - 2) / 2;
+        if(minToMax ? obj[end] < obj[parent] : obj[end] > obj[parent])
+        {
+            swap(obj[end], obj[parent]);
+        }
+        end--;
+        if(minToMax ? obj[end] < obj[parent] : obj[end] > obj[parent])
+        {
+            swap(obj[end], obj[parent]);
+        }
+        end--;
+    }
+}
+
+template <typename T>
+void Sort<T>::heap(T* obj, int len, bool minToMax )
+{
+    minToMax = !minToMax;
+    len = len - 1;
+    for(int i = 0; i < 9;i++)
+    {
+        Sort<int>::createHeap(obj, i, 9, minToMax);
+    }
+    for(int i = 0; i <= len; len--)
+    {
+        createHeap(obj, 0, len, minToMax);
+        swap(obj[0], obj[len]);
+
+    }
+}
+
+template <typename T>
+void Sort<T>::heap(Array<T>& obj, bool minToMax)
+{
+    heap(obj.address(), obj.size(), minToMax);
+}
+
+
 }
 
 #endif // SORT_CPP

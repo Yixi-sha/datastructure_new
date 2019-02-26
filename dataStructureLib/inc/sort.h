@@ -16,6 +16,7 @@ private:
     Sort& operator =(const Sort<T>& obj);
 
 
+
     static void swap(T& a, T& b);
 
 //    template <typename T>
@@ -62,6 +63,13 @@ public:
     static void quick(T* obj, int len, bool minToMax = true);
 //    template <typename T>
     static void quick(Array<T>& obj, bool minToMax = true);
+
+//    template <typename T>
+    static void heap(T* obj, int len, bool minToMax = true);
+//    template <typename T>
+    static void heap(Array<T>& obj, bool minToMax = true);
+
+    static void createHeap(T* obj, int first, int end,bool minToMax = true);
 };
 
 }
