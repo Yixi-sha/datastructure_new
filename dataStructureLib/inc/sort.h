@@ -28,6 +28,9 @@ private:
 //    template <typename T>
     static void quick(int start, int end, T* obj, bool minToMax = true);
 
+    static void createHeap(T* obj, int first, int end,bool minToMax = true);
+
+    static void HeapAdjust(T* obj, int first, int end, bool minToMax = true);
 public:
 //    template <typename T>
     static void select(T* obj, int len, bool minToMax = true); // don't steady
@@ -68,8 +71,6 @@ public:
     static void heap(T* obj, int len, bool minToMax = true);
 //    template <typename T>
     static void heap(Array<T>& obj, bool minToMax = true);
-
-    static void createHeap(T* obj, int first, int end,bool minToMax = true);
 };
 
 }
