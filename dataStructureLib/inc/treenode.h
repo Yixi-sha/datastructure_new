@@ -8,19 +8,12 @@ namespace yixi
 template <typename T>
 class TreeNode : public Object
 {
-protected:
-    bool m_flag;
-    void* operator new(bitsize size) throw();
-
-    TreeNode(const TreeNode& obj);
-    TreeNode<T>& operator = (const TreeNode& obj);
-
 public:
-    T value;
+    char value[sizeof(T)];
     TreeNode<T>* parent;
-    TreeNode(TreeNode<T>* m_parent = NULL);
-    bool flag();
-    virtual ~TreeNode();
+
+    TreeNode(TreeNode<T>* m_parent = nullptr);
+    virtual ~TreeNode() = 0;
 };
 
 }

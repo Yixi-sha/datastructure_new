@@ -14,7 +14,7 @@ protected:
 public:
     pointer(T* p = nullptr);
 
-    T operator*(void) const ;
+    T& operator*(void) const ;
     T& operator * (void) ;
     T* operator -> (void) ;
 

@@ -26,7 +26,7 @@ StaticLinkList<T, N>::StaticLinkList()
 template <typename T, int N>
 typename LinkList<T>::Node*  StaticLinkList<T, N>::create()
 {
-    Node* ret = NULL;
+    Node* ret = nullptr;
     for(int i = 0;i<N;i++)
     {
         if(!i_flage[i])

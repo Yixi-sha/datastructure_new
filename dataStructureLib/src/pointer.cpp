@@ -31,7 +31,7 @@ bool pointer<T>::isNull() const
 }
 
 template<typename T>
-T pointer<T>::operator*(void) const
+T& pointer<T>::operator* (void) const
 {
     return *i_pointer;
 }

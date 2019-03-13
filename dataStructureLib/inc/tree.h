@@ -12,10 +12,14 @@ class Tree : public Object
 protected:
     TreeNode<T>* m_root;
 
-    Tree(const Tree& obj);
     Tree<T>& operator = (const Tree& obj);
+    Tree(const Tree& obj);
 public:
-    Tree();
+    Tree(const T& obj);
+    Tree(TreeNode<T>* obj = nullptr);
+
+
+
     virtual bool insert(TreeNode<T>* node) = 0;
     virtual bool insert(const T& value,TreeNode<T>* parent) = 0;
     virtual SharedPointer< Tree<T> >remove(const T& value) = 0;

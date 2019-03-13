@@ -50,7 +50,8 @@ SmartPointer<T>::~SmartPointer()
         delete this->i_pointer;
     }
 }
+}
 
 #endif // SMARTPOINT_CPP
 
-}
+
