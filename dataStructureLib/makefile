@@ -16,10 +16,6 @@ TYPE_DEP := dep
 AR := ar
 FLAGS_AR := -crs
 CC := g++
-FLAGS_CC := -I $(INC_DIR) 
-ifeq ($(DEBUG),true)
-FLAGS_CC := $(FLAGS_CC) -g -nostlib
-endif
 MKDIR := mkdir
 
 BUILD_DIR := $(TOP_PATH)/build
@@ -37,6 +33,12 @@ OUTPUT := $(BUILD_DIR)/$(THE_PATH).a
 
 vpath %.$(TYPE_INC) $(INC_DIR)
 vpath %.$(TYPE_SRC) $(SRC_DIR)
+
+
+FLAGS_CC := -I $(INC_DIR) 
+ifeq ($(DEBUG),true)
+FLAGS_CC := $(FLAGS_CC) -g 
+endif
 
 include $(DEPS)
 
