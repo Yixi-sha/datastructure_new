@@ -126,8 +126,7 @@ int Avl<T>::adjust(ITNode<T>* obj, ITNode<T>* root)
                     {
                         root->mright = rootNode;
                     }        
-                } 
-                    
+                }          
             }                      
         }
         else

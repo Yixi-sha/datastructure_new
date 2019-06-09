@@ -1,4 +1,4 @@
-.PHONY : all clean rebuild 
+.PHONY : all clean rebuild test
 
 TOP_PATH := $(realpath ..)
 THE_PATH := $(notdir  $(realpath .))
@@ -40,7 +40,7 @@ ifeq ($(DEBUG),true)
 FLAGS_CC := $(FLAGS_CC) -g 
 endif
 
-include $(DEPS)
+#include $(DEPS)
 
 
 all : $(OUTPUT)
@@ -55,7 +55,7 @@ $(OBJS) :
 	$(CC) $(FLAGS_CC) -o $@ -c  $(SRC_DIR)/$(notdir $(@:.$(TYPE_OBJ)=.$(TYPE_SRC)))
 
 test : 
-	@echo "INC_DIR ==> $(INC_DIR)"
+	@echo "TOP_PATH ==> $(TOP_PATH)"
 
 
 $(TARGET_DIR)/%.$(TYPE_DEP) : $(SRC_DIR)/%.$(TYPE_SRC)
