@@ -98,34 +98,23 @@ void Sort<T>::bubble(Array<T>& obj, bool minToMax)
 }
 
 
+
 template <typename T>
 void Sort<T>::shell_select(T* obj, int len, bool minToMax )
 {
-    int d = len;
-
-    do
-    {
-        d = d / 3 + 1;
-
-        for(int i = d - 1; i < len ; i += d)
-        {
+    int h = 1;
+    while(h < len / 3) h = 3 * h + 1;
+    while(h >= 1) {
+        for(int i = 0; i < len - h; i++) {
             int pos = i;
-            int j = i + d;
-            while(j < len)
-            {
-                if(minToMax ? obj[j] < obj[pos] : obj[j] > obj[pos])
-                {
+            for(int j = i + h; (j < len); j += h) 
+                if(minToMax ? obj[j] < obj[pos] : obj[pos] > obj[j]) 
                     pos = j;
-                }
-                j += d;
-            }
             if(i != pos)
-            {
-                swap(obj[i], obj[pos]);
-            }
+                swap(obj[pos], obj[i]);
         }
-
-    }while(d > 1);
+        h = h / 3;             
+    }
 }
 
 template <typename T>
@@ -163,6 +152,30 @@ template <typename T>
 void Sort<T>::shell_bubble(Array<T>& obj, bool minToMax)
 {
     shell_bubble(obj.address(), obj.size(), minToMax);
+}
+
+template <typename T>
+void Sort<T>::shell_insert(T* obj, int len, bool minToMax)
+{
+    int h = 1;
+    while(h < len / 3) h = 3 * h + 1;
+    while(h >= 1) {
+        for(int i = h; i < len; i++) {
+            int pre = i - h;
+
+            for(int j = i; (pre >= 0) && (minToMax ? obj[pre] > obj[j] : obj[pre] < obj[j]); 
+            j -= h, pre -= h) {
+                swap(obj[j], obj[pre]);
+            }
+        }
+        h = h / 3;
+    }
+}
+
+template <typename T>
+void Sort<T>::shell_insert(Array<T>& obj, bool minToMax)
+{
+    shell_insert(obj.address(), obj.size(), minToMax);
 }
 
 template <typename T>
@@ -223,15 +236,14 @@ void Sort<T>::merge(int start, int end, T* obj,T* help, bool minToMax)
             if(minToMax ? obj[i_start] < obj[i_mid] : obj[i_start] > obj[i_mid])
             {
                 help[pos] = obj[i_start];
-                pos++;
                 i_start++;
             }
             else
             {
                 help[pos] = obj[i_mid];
-                pos++;
                 i_mid++;
             }
+            pos++;
         }
         while (i_start <= mid)
         {
@@ -405,6 +417,20 @@ template <typename T>
 void Sort<T>::heap(Array<T>& obj, bool minToMax)
 {
     heap(obj.address(), obj.size(), minToMax);
+}
+
+template <typename T>
+bool Sort<T>::judge(Array<T>& obj, bool minToMax) {
+    return judge(obj.address(), obj.size(), minToMax);
+}
+
+template <typename T>
+bool Sort<T>::judge(T* obj, int len, bool minToMax) {
+    for(int i = 1; i < len; i++) {
+        if(minToMax ? obj[i] < obj[i - 1] : obj[i] > obj[i - 1])
+            return false;
+    }
+    return true;
 }
 
 

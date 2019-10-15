@@ -53,6 +53,11 @@ public:
     static void shell_select(Array<T>& obj, bool minToMax = true);
 
 //    template <typename T>
+    static void shell_insert(T* obj, int len, bool minToMax = true);
+//    template <typename T>
+    static void shell_insert(Array<T>& obj, bool minToMax = true);
+
+//    template <typename T>
     static void shell_bubble(T* obj, int len, bool minToMax = true);
 //    template <typename T>
     static void shell_bubble(Array<T>& obj, bool minToMax = true);
@@ -71,6 +76,11 @@ public:
     static void heap(T* obj, int len, bool minToMax = true);
 //    template <typename T>
     static void heap(Array<T>& obj, bool minToMax = true);
+
+//    template <typename T>
+    static bool judge(T* obj, int len, bool minToMax = true);
+//    template <typename T>
+    static bool judge(Array<T>& obj, bool minToMax = true);
 };
 
 }
