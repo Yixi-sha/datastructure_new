@@ -45,13 +45,13 @@ int main()
     startTime = clock();
     Sort<int>::merge(test1);
     endTime = clock();
-    cout << "merge() is " << Sort<int>::judge(test1);
+    cout << "merge() is " << Sort<int>::judge(test1) << " ";
     cout << "The run time is: " <<(double)(endTime - startTime) / 1000 << "ms" << endl;
 
     startTime = clock();
     Sort<int>::shell_insert(test2);
     endTime = clock();
-    cout << "shell_insert() is " << Sort<int>::judge(test2);
+    cout << "shell_insert() is " << Sort<int>::judge(test2) << " " ;
     cout << "The run time is: " <<(double)(endTime - startTime) / 1000 << "ms" << endl;
 
     cout << "yixi-test end" << endl;

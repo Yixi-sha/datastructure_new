@@ -225,44 +225,49 @@ void Sort<T>::merge(int start, int end, T* obj,T* help, bool minToMax)
     }
     else
     {
-        int mid = ((end + start) / 2);
-        merge(start, mid, obj, help, minToMax);
-        merge(mid + 1, end, obj, help, minToMax);
+        if((end - start) <= 100) {
+            shell_insert(obj + start, end - start + 1, minToMax);
+        } else {
+            int mid = ((end + start) / 2);
+            merge(start, mid, obj, help, minToMax);
+            merge(mid + 1, end, obj, help, minToMax);
 
-        int i_start = start, i_mid = mid + 1, pos = start;
+            int i_start = start, i_mid = mid + 1, pos = start;
 
-        while((i_start <= mid) && (i_mid <= end))
-        {
-            if(minToMax ? obj[i_start] < obj[i_mid] : obj[i_start] > obj[i_mid])
+            while((i_start <= mid) && (i_mid <= end))
+            {
+                if(minToMax ? obj[i_start] < obj[i_mid] : obj[i_start] > obj[i_mid])
+                {
+                    help[pos] = obj[i_start];
+                    i_start++;
+                }
+                else
+                {
+                    help[pos] = obj[i_mid];
+                    i_mid++;
+                }
+                pos++;
+            }
+            while (i_start <= mid)
             {
                 help[pos] = obj[i_start];
+                pos++;
                 i_start++;
             }
-            else
+            while (i_mid <= end)
             {
                 help[pos] = obj[i_mid];
+                pos++;
                 i_mid++;
             }
-            pos++;
+            pos = start;
+            while(pos <= end)
+            {
+                obj[pos] = help[pos];
+                pos++;
+            }
         }
-        while (i_start <= mid)
-        {
-            help[pos] = obj[i_start];
-            pos++;
-            i_start++;
-        }
-        while (i_mid <= end)
-        {
-            help[pos] = obj[i_mid];
-            pos++;
-            i_mid++;
-        }
-        pos = start;
-        while(pos <= end)
-        {
-            obj[pos] = help[pos];
-            pos++;
-        }
+        
     }
 }
 
