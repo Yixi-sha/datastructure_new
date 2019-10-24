@@ -438,6 +438,55 @@ bool Sort<T>::judge(T* obj, int len, bool minToMax) {
     return true;
 }
 
+template <typename T>
+void Sort<T>::merge_other(T* obj, int len, bool minToMax ){
+    T*  help = reinterpret_cast<T*>(new char[sizeof(T) * len]);
+    int i = 1;
+    if(help) {
+        for(; i < len; i *= 2) {
+            for(int j = 0; j < len; j += i * 2) {
+                int mid = j + i - 1;
+                int end = j + 2 * i - 1;
+                end = end < (len - 1) ? end : (len - 1);
+                merge_other(j, mid, end, obj, help, minToMax);
+            }
+        }
+
+        delete[] help;
+    }else {
+        THROW_EXCEPTION(NoEnoughMemoryException, "No Enough Memory in merge_other()");
+    }
+}
+
+template <typename T>
+void Sort<T>::merge_other(int start, int mid,int end, T* obj, T* help, bool minToMax ){
+    int startCopy = start;
+    int endCopy = end;
+    int startMid = mid;
+    int endMid = startMid + 1;
+    int j = start;
+    for(; j <= end; j++){
+        if(endMid > end)
+            help[j] = obj[start++];
+        else if(start > startMid)
+            help[j] = obj[endMid++];
+        else if(minToMax ? obj[start] < obj[endMid] : obj[start] > obj[endMid]) 
+            help[j] = obj[start++];
+        else 
+            help[j] = obj[endMid++];
+    }
+    j = startCopy;
+    while(j <= endCopy) {
+        obj[j] = help[j];
+        j++;
+    }
+}
+
+template <typename T>
+void Sort<T>::merge_other(Array<T>& obj, bool minToMax) {
+    merge_other(obj.address(), obj.size(), minToMax);
+}
+
 
 }
 

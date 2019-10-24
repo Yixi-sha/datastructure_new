@@ -24,6 +24,8 @@ private:
 
 //    template <typename T>
     static void merge(int start, int end, T* obj, T* help, bool minToMax = true);
+    //    template <typename T>
+    static void merge_other(int start, int mid,int end, T* obj, T* help, bool minToMax = true);
 
 //    template <typename T>
     static void quick(int start, int end, T* obj, bool minToMax = true);
@@ -81,6 +83,11 @@ public:
     static bool judge(T* obj, int len, bool minToMax = true);
 //    template <typename T>
     static bool judge(Array<T>& obj, bool minToMax = true);
+
+//    template <typename T>
+    static void merge_other(T* obj, int len, bool minToMax = true);
+//    template <typename T>
+    static void merge_other(Array<T>& obj, bool minToMax = true);
 };
 
 }

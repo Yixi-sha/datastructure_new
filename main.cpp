@@ -49,9 +49,9 @@ int main()
     cout << "The run time is: " <<(double)(endTime - startTime) / 1000 << "ms" << endl;
 
     startTime = clock();
-    Sort<int>::shell_insert(test2);
+    Sort<int>::merge_other(test2);
     endTime = clock();
-    cout << "shell_insert() is " << Sort<int>::judge(test2) << " " ;
+    cout << "merge_other() is " << Sort<int>::judge(test2) << " " ;
     cout << "The run time is: " <<(double)(endTime - startTime) / 1000 << "ms" << endl;
 
     cout << "yixi-test end" << endl;
