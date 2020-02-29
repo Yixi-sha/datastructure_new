@@ -11,8 +11,8 @@ private:
     T* firstFree;
     T* cap;
 
-    //void alloc_n_copy(int n, T* begin, T* end);
-    //void free(T* addr);
+    void copy_from_other(const MyVector& obj);
+    void free(T* addr, int size);
     void check_n_alloc(); // if do not have suffient room, it will alloc
     void reallocate();
 
@@ -20,15 +20,18 @@ public:
     MyVector();
     MyVector(const MyVector& obj);
 
-    //MyVector& operator = (const MyVector& obj);
+    MyVector& operator = (const MyVector& obj);
 
     ~MyVector();
+
+    T& operator [](int pos);
+    T operator [](int pos) const;
 
     void push_back(const T& obj);
     int size() const;
     int capacity() const;
-    //T* begin();
-    //T* end();
+    T* begin();
+    T* end();
 };
 
 }
