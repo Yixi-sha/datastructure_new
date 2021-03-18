@@ -328,99 +328,67 @@ void Sort<T>::quick(int start, int end, T obj[], bool minToMax)
 }
 
 template <typename T>
-void Sort<T>::quick(Array<T>& obj, bool minToMax)
-{
+void Sort<T>::quick(Array<T>& obj, bool minToMax){
     quick(obj.address(), obj.size(), minToMax);
 }
 
 template <typename T>
-void Sort<T>::HeapAdjust(T* obj, int first, int end, bool minToMax)
-{
-    int left = first * 2 + 1;
-    int right = first * 2 + 2;
-    if(left <= end)
-    {
-        if(right > end)
-        {
-            if(minToMax ? obj[left] < obj[first] : obj[left] > obj[first])
-            {
-                swap(obj[left], obj[first]);
-            }
+void Sort<T>::heapCreate(T* obj, int start, int end, bool minToMax){
+    int lastNode = (end - start + 1) / 2 - 1 + start;
+    while(lastNode >= start){
+        int leftNode = lastNode * 2 + 1;
+        int rightNode = lastNode * 2 + 2;
+        int target = lastNode;
+
+        if(leftNode <= end &&  (minToMax ? obj[leftNode] > obj[target] : obj[leftNode] < obj[target])){
+            target = leftNode;
         }
-        else
-        {
-            int aim = first;
-            if(minToMax ? obj[left] < obj[aim] : obj[left] > obj[aim])
-            {
-                aim = left;
-            }
-            if(minToMax ? obj[right] < obj[aim] : obj[right] > obj[aim])
-            {
-                aim = right;
-            }
-            if(aim != first)
-            {
-                swap(obj[aim], obj[first]);
-                HeapAdjust(obj, aim, end, minToMax);
-            }
+
+        if(rightNode <= end && (minToMax ? obj[rightNode] > obj[target] : obj[rightNode] < obj[target])){
+            target = rightNode;
         }
+        
+        if(target != lastNode){
+            swap(obj[target], obj[lastNode]);
+            headAdjust(obj,target, end,minToMax);
+        }
+        --lastNode;
     }
 }
 
 template <typename T>
-void Sort<T>::createHeap(T* obj, int first, int end, bool minToMax)
-{
-    int count = end - first;
-    obj = obj + first;
-    end = count;
-
-    if((count != 0) && ((count % 2) == 0))
-    {
-
-        int parent = (end - 1) / 2;
-        if(minToMax ? obj[end] < obj[parent] : obj[end] > obj[parent])
-        {
-            swap(obj[end], obj[parent]);
-        }
-        end--;
+void Sort<T>::headAdjust(T* obj, int start, int end, bool minToMax){
+    int leftNode = start * 2 + 1;
+    int rightNode = start * 2 + 2;
+    int target = start;   
+    if(end > start){
+        return;
     }
-    while (end > 0)
-    {
-        int parent = (end - 2) / 2;
-        int aim = parent;
-        if(minToMax ? obj[end] < obj[aim] : obj[end] > obj[aim])
-        {
-            aim = end;
-        }
-        end--;
-        if(minToMax ? obj[end] < obj[aim] : obj[end] > obj[aim])
-        {
-            aim = end;
-        }
-        if(aim != parent)
-        {
-            swap(obj[aim], obj[parent]);
-            HeapAdjust(obj, aim, count, minToMax);
-        }
-        end--;
+    if(leftNode <= end &&  (minToMax ? obj[leftNode] > obj[target] : obj[leftNode] < obj[target])){
+        target = leftNode;
     }
-}
 
-template <typename T>
-void Sort<T>::heap(T* obj, int len, bool minToMax )
-{
-    len = len - 1;
-    for(int i = len; i > 0; i--)
-    {
-        Sort<int>::createHeap(obj, 0, i, !minToMax);
-        swap(obj[0], obj[i]);
+    if(rightNode <= end && (minToMax ? obj[rightNode] > obj[target] : obj[rightNode] < obj[target])){
+        target = rightNode;
+    }
+        
+    if(target != start){
+        swap(obj[target], obj[start]);
+        headAdjust(obj,target, end,minToMax);
     }
 
 }
 
 template <typename T>
-void Sort<T>::heap(Array<T>& obj, bool minToMax)
-{
+void Sort<T>::heap(T* obj, int len, bool minToMax){
+    for(int i = 0; i < len; ++i){
+        heapCreate(obj, 0, len - 1 - i, minToMax);
+        swap(obj[0], obj[len - 1 - i]);
+    }
+}
+
+template <typename T>
+void Sort<T>::heap(Array<T>& obj, bool minToMax){
     heap(obj.address(), obj.size(), minToMax);
 }
 

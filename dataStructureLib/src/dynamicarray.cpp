@@ -122,7 +122,7 @@ bool DynamicArray<T>::reSize(int size)
     {
         if(0 != size)
         {
-            T* temp = (new char[size]);
+            T* temp = (new T[size]);
             if(temp != nullptr)
             {
                 int tempSize = i_size < size ? i_size : size;
