@@ -8,6 +8,7 @@
 #include "dataStructureLib/inc/staticarray.h"
 #include "dataStructureLib/inc/dynamicarray.h"
 #include "dataStructureLib/inc/sort.h"
+#include "dataStructureLib/inc/avl.h"
 using namespace std;
 using namespace yixi;
 
@@ -16,19 +17,7 @@ int main()
 {
 
     cout << "yixi-test begin" << endl;
-    DynamicArray<int> array;
-    uniform_int_distribution<int> u(-100,100);
-    default_random_engine e;
-    array.reSize(1000);
-    for(int i = 0; i < 1000; ++i){
-        array[i] = u(e);
-    }
-    Sort<int>::heap(array);
-    for(int i = 0; i < 1000; ++i){
-        cout << array[i] << "\t";
-    }
-    cout << endl;
-    cout << Sort<int>::judge(array) << endl;
+    AVL<int> avl;
     cout << "yixi-test end" << endl;
 
     return 0;
